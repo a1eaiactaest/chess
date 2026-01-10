@@ -2,12 +2,22 @@ import os
 import sys
 
 from fastapi import FastAPI, status
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.models import HealthCheck
 
 DEBUG = os.getenv("DEBUG", None) is not None
 
 app = FastAPI(debug=DEBUG)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
