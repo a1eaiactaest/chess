@@ -1,8 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { Chessground } from '@lichess-org/chessground';
-    import type { Api } from '@lichess-org/chessground/api';
     import { Chess } from 'chess.js';
+    import type { Api } from '@lichess-org/chessground/api';
+
+    import { toDests, toColor, playOtherSide } from './lib/utils'
 
     let el: HTMLDivElement;
     let chessground: Api;
@@ -16,6 +18,8 @@
             movable: {
                 color: 'white',
                 free: false,
+                dests: toDests(chess)
+                /*
                 events: {
                     after: (from, to) => {
                         const move = chess.move({ from: from, to: to, promotion: 'q' });
@@ -30,10 +34,21 @@
                         });
                     }
                 }
+                */
+            },
+            draggable: {
+                showGhost: true,
             }
         });
         // initial position with chess.js
-        chessground.set({ fen: chess.fen() });
+        //chessground.set({ fen: chess.fen() });
+        chessground.set({
+            movable: {
+                events: {
+                    after: playOtherSide(chessground, chess)
+                }
+            }
+        });
     });
 </script>
 
