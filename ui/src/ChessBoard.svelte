@@ -19,22 +19,6 @@
                 color: 'white',
                 free: false,
                 dests: toDests(chess)
-                /*
-                events: {
-                    after: (from, to) => {
-                        const move = chess.move({ from: from, to: to, promotion: 'q' });
-                        if (!move) {
-                            // illegal -> revert by re-sending current position
-                            chessground.set({ fen: chess.fen() });
-                            return;
-                        }
-                        chessground.set({
-                            fen: chess.fen(),
-                            turnColor: chess.turn() === 'w' ? 'white' : 'black',
-                        });
-                    }
-                }
-                */
             },
             draggable: {
                 showGhost: true,
